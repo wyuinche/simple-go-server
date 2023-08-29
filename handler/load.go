@@ -24,7 +24,7 @@ func GetRouter() router.Router {
 	r.AddPut("/user/:user_id", handleUpdateUser)
 	r.AddDelete("/user/:user_id", handleDeleteUser)
 
-	// r.AddGet("/user/:user_id/orders", handleGetUserOrders)
+	r.AddGet("/user/:user_id/orders", handleGetUserOrders)
 
 	r.AddPost("/login", handleLogin)
 	r.AddPost("/logout", handleLogout)
@@ -41,7 +41,7 @@ func GetRouter() router.Router {
 	r.AddPut("/order/:oid", handleUpdateOrder)
 	r.AddDelete("/order/:oid", handleDeleteOrder)
 
-	// r.AddGet("/orders", handleGetOrders)
+	r.AddGet("/orders", handleGetOrders)
 
 	return r
 }

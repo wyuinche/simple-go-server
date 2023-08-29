@@ -36,3 +36,12 @@ type GetOrderResponse struct {
 	Products []int64 `json:"products"`
 	Date     string  `json:"date"`
 }
+
+type GetUserOrdersResponse struct {
+	UID    int64    `json:"uid"`
+	Orders []string `json:"orders"`
+}
+
+type GetOrdersResponse struct {
+	Orders []string `json:"orders"`
+}

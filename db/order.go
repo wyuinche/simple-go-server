@@ -17,6 +17,9 @@ var insertOrderProduct = `INSERT INTO orderproduct (oid, pid) VALUES ($1, $2)`
 var updateOrderProduct = `UPDATE orderproduct SET pid=$1 WHERE oid=$2 and pid=$3`
 var deleteOrderProduct = `DELETE FROM orderproduct WHERE oid=$1 and pid=$2`
 
+var selectUserOrders = `SELECT * FROM "order" WHERE uid = $1`
+var selectOrders = `SELECT * FROM "order" ORDER BY date desc`
+
 func (db *Database) InsertOrder(uid int64) (int64, error) {
 	result, err := db.Exec(
 		insertOrder,
@@ -136,4 +139,50 @@ func (db *Database) DeleteOrderProduct(oid, pid int64) error {
 	}
 
 	return nil
+}
+
+func (db *Database) SelectUserOrders(uid int64) ([]model.Order, error) {
+	orders := []model.Order{}
+
+	rows, err := db.Query(selectUserOrders, uid)
+	if err != nil {
+		return nil, errors.Errorf("transaction execution failure")
+	}
+	for {
+		if !rows.Next() {
+			break
+		}
+
+		order := model.Order{}
+		if err = rows.Scan(&order.OID, &order.UID, &order.Date); err != nil {
+			return nil, errors.Errorf("column scanning failure")
+		}
+
+		orders = append(orders, order)
+	}
+
+	return orders, nil
+}
+
+func (db *Database) SelectOrders() ([]model.Order, error) {
+	orders := []model.Order{}
+
+	rows, err := db.Query(selectOrders)
+	if err != nil {
+		return nil, errors.Errorf("transaction execution failure")
+	}
+	for {
+		if !rows.Next() {
+			break
+		}
+
+		order := model.Order{}
+		if err = rows.Scan(&order.OID, &order.UID, &order.Date); err != nil {
+			return nil, errors.Errorf("column scanning failure")
+		}
+
+		orders = append(orders, order)
+	}
+
+	return orders, nil
 }

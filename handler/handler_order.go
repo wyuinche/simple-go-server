@@ -6,6 +6,8 @@ import (
 	"log"
 	"net/http"
 	"simple-go-server/db"
+	"simple-go-server/model"
+	"sort"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
@@ -372,4 +374,44 @@ func handleDeleteOrder(c *gin.Context) {
 	}
 
 	writeMessage(c, http.StatusOK, "delete order success")
+}
+
+func handleGetOrders(c *gin.Context) {
+	claims, keep := checkToken(c)
+	if !keep {
+		return
+	}
+
+	if claims.Role != model.RoleManager {
+		writeMessage(c, http.StatusUnauthorized, "only manager can check orders")
+		return
+	}
+
+	db, err := db.Get()
+	if err != nil {
+		writeMessage(c, http.StatusInternalServerError, "db failure")
+		return
+	}
+
+	orders, err := db.SelectOrders()
+	if err != nil {
+		writeMessage(c, http.StatusInternalServerError, fmt.Sprintf("%v", err))
+		return
+	}
+
+	sort.Slice(orders, func(i, j int) bool {
+		return orders[i].Date > orders[j].Date
+	})
+
+	res := make([]string, len(orders))
+	for i, od := range orders {
+		res[i] = fmt.Sprintf("%d,%d", od.OID, od.Date)
+	}
+
+	c.JSON(
+		http.StatusOK,
+		GetOrdersResponse{
+			res,
+		},
+	)
 }

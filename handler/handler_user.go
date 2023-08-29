@@ -7,6 +7,7 @@ import (
 	"simple-go-server/db"
 	"simple-go-server/model"
 	"simple-go-server/token"
+	"sort"
 
 	"github.com/gin-gonic/gin"
 )
@@ -224,4 +225,58 @@ func handleDeleteUser(c *gin.Context) {
 	c.SetCookie(token.ACCESS_TOKEN_NAME, "", -1, "/", "localhost", false, true)
 
 	writeMessage(c, http.StatusOK, "user delete success")
+}
+
+func handleGetUserOrders(c *gin.Context) {
+	userID := c.Param("user_id")
+
+	claims, keep := checkToken(c)
+	if !keep {
+		return
+	}
+
+	if claims.UserID != userID {
+		writeMessage(c, http.StatusUnauthorized, "invalid access token for this user")
+		return
+	}
+
+	db, err := db.Get()
+	if err != nil {
+		writeMessage(c, http.StatusInternalServerError, "db failure")
+		return
+	}
+
+	user, err := db.SelectUser(userID)
+	if err != nil {
+		writeMessage(c, http.StatusInternalServerError, fmt.Sprintf("%v", err))
+		return
+	}
+
+	if user == nil {
+		writeMessage(c, http.StatusNotFound, "user not found")
+		return
+	}
+
+	orders, err := db.SelectUserOrders(user.UID)
+	if err != nil {
+		writeMessage(c, http.StatusInternalServerError, fmt.Sprintf("%v", err))
+		return
+	}
+
+	sort.Slice(orders, func(i, j int) bool {
+		return orders[i].Date > orders[j].Date
+	})
+
+	res := make([]string, len(orders))
+	for i, od := range orders {
+		res[i] = fmt.Sprintf("%d,%d", od.OID, od.Date)
+	}
+
+	c.JSON(
+		http.StatusOK,
+		GetUserOrdersResponse{
+			user.UID,
+			res,
+		},
+	)
 }
