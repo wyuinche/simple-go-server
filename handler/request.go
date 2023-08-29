@@ -1,5 +1,10 @@
 package handler
 
+type LoginRequest struct {
+	UserID   string `json:"user_id"`
+	Password string `json:"password"`
+}
+
 type CreateUserRequest struct {
 	UserID   string `json:"user_id"`
 	Password string `json:"password"`

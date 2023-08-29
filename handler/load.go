@@ -26,8 +26,8 @@ func GetRouter() router.Router {
 
 	// r.AddGet("/user/:user_id/orders", handleGetUserOrders)
 
-	// r.AddPost("/login", handleLogin)
-	// r.AddPost("/logout", handleLogout)
+	r.AddPost("/login", handleLogin)
+	r.AddPost("/logout", handleLogout)
 
 	// r.AddPost("/product", handleCreateProduct)
 
@@ -42,6 +42,8 @@ func GetRouter() router.Router {
 	// r.AddDelete("/order/:oid", handleDeleteOrder)
 
 	// r.AddGet("/orders", handleGetOrders)
+
+	// r.AddGet("/pay/:oid", handlePay)
 
 	return r
 }
