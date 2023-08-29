@@ -25,3 +25,11 @@ type UpdateProductRequest struct {
 	Name  string `json:"name"`
 	Price int64  `json:"price"`
 }
+
+type CreateOrderRequest struct {
+	Products []int64 `json:"products"`
+}
+
+type UpdateOrderRequest struct {
+	Products []int64 `json:"products"`
+}

@@ -19,8 +19,10 @@ var createProductTableQuery = `CREATE TABLE product (
 var createOrderTableQuery = `CREATE TABLE "order" (
 	oid integer primary key autoincrement,
 	uid integer,
-	status text,
 	date integer);`
+var createOrderProductQuery = `CREATE TABLE orderproduct (
+	oid integer,
+	pid integer);`
 
 func Get() (*Database, error) {
 	if err := Init(); err != nil {
@@ -54,6 +56,10 @@ func Init() error {
 	}
 
 	if _, err := db.Exec(createOrderTableQuery); err != nil {
+		return err
+	}
+
+	if _, err := db.Exec(createOrderProductQuery); err != nil {
 		return err
 	}
 

@@ -35,11 +35,11 @@ func GetRouter() router.Router {
 	r.AddPut("/product/:pid", handleUpdateProduct)
 	r.AddDelete("/product/:pid", handleDeleteProduct)
 
-	// r.AddPost("/order", handleCreateOrder)
+	r.AddPost("/order", handleCreateOrder)
 
-	// r.AddGet("/order/:oid", handleGetOrder)
-	// r.AddPut("/order/:oid", handleUpdateOrder)
-	// r.AddDelete("/order/:oid", handleDeleteOrder)
+	r.AddGet("/order/:oid", handleGetOrder)
+	r.AddPut("/order/:oid", handleUpdateOrder)
+	r.AddDelete("/order/:oid", handleDeleteOrder)
 
 	// r.AddGet("/orders", handleGetOrders)
 

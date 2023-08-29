@@ -24,3 +24,15 @@ type CreateProductResponse struct {
 type GetProductResponse struct {
 	model.Product
 }
+
+type CreateOrderResponse struct {
+	OID     int64  `json:"oid"`
+	Message string `json:"message"`
+}
+
+type GetOrderResponse struct {
+	OID      int64   `json:"oid"`
+	UID      int64   `json:"uid"`
+	Products []int64 `json:"products"`
+	Date     string  `json:"date"`
+}
