@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"simple-go-server/db"
+	"simple-go-server/handler"
 )
 
 func main() {
@@ -25,4 +26,9 @@ func main() {
 		panic(err)
 	}
 	defer d.Close()
+
+	r := handler.GetRouter()
+	r.LoadAll()
+
+	r.Run(":3000")
 }
