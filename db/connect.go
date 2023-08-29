@@ -15,8 +15,7 @@ var createUserTableQuery = `CREATE TABLE user (
 var createProductTableQuery = `CREATE TABLE product (
 	pid integer primary key autoincrement,
 	name text,
-	price integer,
-	stock integer);`
+	price integer);`
 var createOrderTableQuery = `CREATE TABLE "order" (
 	oid integer primary key autoincrement,
 	uid integer,

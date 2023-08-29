@@ -62,7 +62,6 @@ func (id UserID) IsValid() error {
 	if !userIDRegex.MatchString(string(id)) {
 		return errors.Errorf("invalid user id")
 	}
-
 	return nil
 }
 

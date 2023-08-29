@@ -15,3 +15,12 @@ type CreateUserResponse struct {
 type GetUserResponse struct {
 	model.User
 }
+
+type CreateProductResponse struct {
+	PID     int64  `json:"pid"`
+	Message string `json:"message"`
+}
+
+type GetProductResponse struct {
+	model.Product
+}

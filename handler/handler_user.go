@@ -53,7 +53,7 @@ func handleCreateUser(c *gin.Context) {
 		return
 	}
 
-	user, err := db.SelectUser(string(userID))
+	user, err := db.SelectUser(req.UserID)
 	if err != nil {
 		writeMessage(c, http.StatusInternalServerError, fmt.Sprintf("%v", err))
 		return
@@ -70,7 +70,7 @@ func handleCreateUser(c *gin.Context) {
 		return
 	}
 
-	uid, err := db.InsertUser(string(userID), req.Role, pwHash)
+	uid, err := db.InsertUser(req.UserID, req.Role, pwHash)
 	if err != nil {
 		writeMessage(c, http.StatusInternalServerError, fmt.Sprintf("%v", err))
 		return

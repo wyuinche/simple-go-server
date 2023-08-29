@@ -29,11 +29,11 @@ func GetRouter() router.Router {
 	r.AddPost("/login", handleLogin)
 	r.AddPost("/logout", handleLogout)
 
-	// r.AddPost("/product", handleCreateProduct)
+	r.AddPost("/product", handleCreateProduct)
 
-	// r.AddGet("/product/:pid", handleGetProduct)
-	// r.AddPut("/product/:pid", handleUpdateProduct)
-	// r.AddDelete("/product/:pid", handleDeleteProduct)
+	r.AddGet("/product/:pid", handleGetProduct)
+	r.AddPut("/product/:pid", handleUpdateProduct)
+	r.AddDelete("/product/:pid", handleDeleteProduct)
 
 	// r.AddPost("/order", handleCreateOrder)
 
@@ -42,8 +42,6 @@ func GetRouter() router.Router {
 	// r.AddDelete("/order/:oid", handleDeleteOrder)
 
 	// r.AddGet("/orders", handleGetOrders)
-
-	// r.AddGet("/pay/:oid", handlePay)
 
 	return r
 }
