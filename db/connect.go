@@ -1,6 +1,8 @@
 package db
 
 import (
+	"simple-go-server/model"
+
 	_ "github.com/mattn/go-sqlite3"
 	"github.com/pkg/errors"
 )
@@ -60,6 +62,15 @@ func Init() error {
 	}
 
 	if _, err := db.Exec(createOrderProductQuery); err != nil {
+		return err
+	}
+
+	masterPw, err := model.Password("pwmaster01++").Hash()
+	if err != nil {
+		return err
+	}
+
+	if _, err := db.Exec(insertUser, "master01", "manager", masterPw); err != nil {
 		return err
 	}
 
