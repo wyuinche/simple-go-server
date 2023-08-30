@@ -26,6 +26,8 @@ var createOrderProductQuery = `CREATE TABLE orderproduct (
 	oid integer,
 	pid integer);`
 
+// Get returns the global Database instance
+// which always points to the same db after server live.
 func Get() (*Database, error) {
 	if err := Init(); err != nil {
 		return nil, err

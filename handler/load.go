@@ -52,6 +52,8 @@ func handlePing(c *gin.Context) {
 	})
 }
 
+// checkToken checks whether the access-token exists in the cookie
+// and returns the Claims if it exists.
 func checkToken(c *gin.Context) (*token.Claims, bool) {
 	accessToken, err := c.Cookie(token.ACCESS_TOKEN_NAME)
 	if err != nil {

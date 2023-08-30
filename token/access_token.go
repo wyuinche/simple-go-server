@@ -32,10 +32,10 @@ func CreateAccessToken(uid int64, userID, role string) (string, error) {
 	return t, nil
 }
 
-func GetJWTToken(at string) (*Claims, *jwt.Token, error) {
+func GetJWTToken(accessToken string) (*Claims, *jwt.Token, error) {
 	claims := Claims{}
 
-	t, err := jwt.ParseWithClaims(at, &claims, func(token *jwt.Token) (interface{}, error) {
+	t, err := jwt.ParseWithClaims(accessToken, &claims, func(token *jwt.Token) (interface{}, error) {
 		return JWTSecret(), nil
 	})
 

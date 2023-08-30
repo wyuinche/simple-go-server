@@ -40,18 +40,18 @@ func (p Password) IsValid() error {
 	return nil
 }
 
+// Hash returns the hash value of the password
+// to be inserted into the database.
 func (p Password) Hash() (string, error) {
 	bytes, err := bcrypt.GenerateFromPassword([]byte(p), bcrypt.DefaultCost)
 	return string(bytes), err
 }
 
+// CompareWithHash returns true if the argument
+// 'hash' is the hash value of the password.
 func (p Password) CompareWithHash(hash string) bool {
 	err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(p))
-	if err != nil {
-		return false
-	} else {
-		return true
-	}
+	return err == nil
 }
 
 var userIDRegex = regexp.MustCompile("^[a-zA-Z0-9]{3,18}$")

@@ -7,6 +7,8 @@ import (
 
 var TestRouter *router.Router
 
+// init initiate the router used to test handlers
+// before the test starts.
 func init() {
 	r := handler.GetRouter()
 	TestRouter = &r

@@ -10,6 +10,8 @@ type Database struct {
 	*sqlx.DB
 }
 
+// Connect connects the database or verifies
+// that the database is connected normally by sqlx.DB.Ping().
 func (db *Database) Connect() error {
 	if db.DB == nil {
 		d, err := sqlx.Connect("sqlite3", ":memory:")
@@ -22,6 +24,8 @@ func (db *Database) Connect() error {
 	return db.Ping()
 }
 
+// Exec executes the transaction for the queries it receives
+// and returns the result as sql.Result.
 func (db *Database) Exec(query string, args ...interface{}) (sql.Result, error) {
 	tx, err := db.Begin()
 	if err != nil {
